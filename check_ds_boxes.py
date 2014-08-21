@@ -29,8 +29,11 @@ def most_recent(data):
         return None
 
 def get_last_run_time():
-    last_run = scraperwiki.sql.get_var('last_run')
-    return last_run or YESTERDAY
+    last_run_string = scraperwiki.sql.get_var('last_run')
+    if last_run_string:
+        return datetime.datetime.strptime(last_run_string, "%Y-%m-%d %H:%M:%S.%f" )
+    else:
+        return YESTERDAY
 
 def save_most_recent(data):
     fail_time = most_recent(data)
